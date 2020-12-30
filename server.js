@@ -34,7 +34,7 @@ app.get("/api/notes", function(req, res) {
   res.json(dbJSON);
 });
 
-app.post("/note", function(req, res) {
+app.post("/api/notes", function(req, res) {
   // Validate request body
   if(!req.body.title) {
     return res.json({error: "Missing required title"});
@@ -45,6 +45,9 @@ app.post("/note", function(req, res) {
 
   // Push note to dbJSON array - saves data in memory
   dbJSON.push(note);
+
+
+
 
   // Saves data to file by persisting in memory variable dbJSON to db.json file.
   // This is needed because when we turn off server we loose all memory data like pbJSON variable.
@@ -57,6 +60,21 @@ app.post("/note", function(req, res) {
     return res.json(note);
   });
 });
+
+
+app.delete("/api/notes/:id", function(req, res) {
+  var chosen = req.params.id;
+  console.log(chosen)
+
+
+  dbJSON.filter(chosen);
+  // lookup filter syntax 
+  // rewrite file 
+
+
+
+
+  })
 
 app.get("*", function(req, res) {
   res.send("Sending you the homepage");
