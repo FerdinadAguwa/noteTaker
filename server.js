@@ -30,6 +30,7 @@ app.get("/", function(req, res) {
 app.get("/notes", function(req, res) {
   res.sendFile(path.join(__dirname, "public/notes.html"));
 });
+
 app.get("/api/notes", function(req, res) {
   res.json(dbJSON);
 });
@@ -65,10 +66,10 @@ app.post("/api/notes", function(req, res) {
 
 
 app.delete("/api/notes/:id", function(req, res) {
-  var noteId = req.params.id;
+  let noteId = req.params.id;
   
   
-  var marvelHeroes =  dbJSON.filter(function() {
+  var deleteNote =  dbJSON.filter(function() {
     return noteId;
     
 });
@@ -77,12 +78,12 @@ app.delete("/api/notes/:id", function(req, res) {
   // dbJSON.filter(noteId);
   // console.log(noteId)
 
-  // fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
-  //   if (err) {
-  //     return res.json({error: "Error writing to file"});
-  //   }
+  fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
+    if (err) {
+      return res.json({error: "Error writing to file"});
+    }
 
-  //   return res.json(note);
+    return res.json(deleteNote);
   });
 
   // lookup filter syntax 
@@ -91,7 +92,7 @@ app.delete("/api/notes/:id", function(req, res) {
 
 
 
-  // })
+   })
 
 app.get("*", function(req, res) {
   res.send("Sending you the homepage");
