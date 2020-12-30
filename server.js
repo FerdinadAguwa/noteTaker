@@ -40,8 +40,10 @@ app.post("/api/notes", function(req, res) {
     return res.json({error: "Missing required title"});
   }
 
+
   // Copy request body and generate ID
   const note = {...req.body, id: uuidv4()}
+  console.log(note)
 
   // Push note to dbJSON array - saves data in memory
   dbJSON.push(note);
@@ -63,18 +65,33 @@ app.post("/api/notes", function(req, res) {
 
 
 app.delete("/api/notes/:id", function(req, res) {
-  var chosen = req.params.id;
-  console.log(chosen)
+  var noteId = req.params.id;
+  
+  
+  var marvelHeroes =  dbJSON.filter(function() {
+    return noteId;
+    
+});
+  console.log(noteId);
 
+  // dbJSON.filter(noteId);
+  // console.log(noteId)
 
-  dbJSON.filter(chosen);
+  // fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
+  //   if (err) {
+  //     return res.json({error: "Error writing to file"});
+  //   }
+
+  //   return res.json(note);
+  });
+
   // lookup filter syntax 
   // rewrite file 
 
 
 
 
-  })
+  // })
 
 app.get("*", function(req, res) {
   res.send("Sending you the homepage");
