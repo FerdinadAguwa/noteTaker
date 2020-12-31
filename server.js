@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require("fs");
 const dbJSON = require("./db.json");
 const path = require("path");
+const { Z_FILTERED } = require("zlib");
 
 // Sets up the Express App
 // =============================================================
@@ -67,24 +68,25 @@ app.post("/api/notes", function(req, res) {
 
 app.delete("/api/notes/:id", function(req, res) {
   let noteId = req.params.id;
+ 
   
-  
-  var deleteNote =  dbJSON.filter(function() {
-    return noteId;
+ filter(dbJSON=>console.log(noteId))
+
     
 });
-  console.log(noteId);
+// marvelHeroes.splice(2, 1);
+  // console.log(marvelHeroes);
 
   // dbJSON.filter(noteId);
   // console.log(noteId)
 
-  fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
-    if (err) {
-      return res.json({error: "Error writing to file"});
-    }
+  // fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
+  //   if (err) {
+  //     return res.json({error: "Error writing to file"});
+  //   }
 
-    return res.json(deleteNote);
-  });
+  //   return res.json(marvelHeroes);
+  // });
 
   // lookup filter syntax 
   // rewrite file 
@@ -92,7 +94,7 @@ app.delete("/api/notes/:id", function(req, res) {
 
 
 
-   })
+  //  })
 
 app.get("*", function(req, res) {
   res.send("Sending you the homepage");
