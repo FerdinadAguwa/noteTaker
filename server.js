@@ -3,14 +3,14 @@
 const express = require("express");
 const { v4: uuidv4 } = require('uuid');
 const fs = require("fs");
-const dbJSON = require("./db.json");
+let dbJSON = require("./db.json");
 const path = require("path");
 const { Z_FILTERED } = require("zlib");
 
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -68,28 +68,25 @@ app.post("/api/notes", function(req, res) {
 
 app.delete("/api/notes/:id", function(req, res) {
   let noteId = req.params.id;
- 
-  
- filter(dbJSON=>console.log(noteId))
+ console.log(dbJSON.noteId)
 
-    
+ const newNotes =dbJSON.filter(note=> note.id !== noteId)
+console.log(newNotes)
+
+dbJSON=newNotes 
+
+fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
+  if (err) {
+    return res.json({error: "Error writing to file"});
+  }
+
+  return res.json(newNotes);
 });
-// marvelHeroes.splice(2, 1);
-  // console.log(marvelHeroes);
 
-  // dbJSON.filter(noteId);
-  // console.log(noteId)
+});
 
-  // fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(dbJSON), (err) => {
-  //   if (err) {
-  //     return res.json({error: "Error writing to file"});
-  //   }
 
-  //   return res.json(marvelHeroes);
-  // });
-
-  // lookup filter syntax 
-  // rewrite file 
+ 
 
 
 

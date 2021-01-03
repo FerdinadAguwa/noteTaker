@@ -74,6 +74,7 @@ const handleNoteDelete = function (event) {
   }
 
   deleteNote(note.id).then(() => {
+    console.log("?")
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -103,6 +104,7 @@ const handleRenderSaveBtn = function () {
 
 // Render's the list of note titles
 const renderNoteList = (notes) => {
+  console.log(notes)
   $noteList.empty();
 
   const noteListItems = [];
@@ -137,7 +139,9 @@ const renderNoteList = (notes) => {
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => {
+  console.log("Ferd")
   return getNotes().then(renderNoteList);
+
 };
 
 $saveNoteBtn.on("click", handleNoteSave);
